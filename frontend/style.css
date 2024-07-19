@@ -16,15 +16,26 @@ svg{
 
 .toolbox{
     display: flex;
+    justify-content: space-between;
+    align-items: center;
     flex-direction: row;
     height: 5%;
     background-color: #526D82;
+    padding: 0 15px 0 0;
 }
 .toolboxItem{
     margin-left: 15px;
     font-size: 1em;
     cursor: pointer;
     height: 100%;
+}
+.toolboxItemsContainer{
+    display: flex;
+    height: 100%;
+}
+.logIn{
+    color: white;
+    text-decoration: none;
 }
 .dropdownMenu{
     display: none;
