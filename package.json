@@ -1,0 +1,22 @@
+{
+  "name": "rapidcodeide",
+  "version": "0.1.0-alpha",
+  "description": "In-browser code editor to simplify your code editing experience",
+  "main": "server.ts",
+  "scripts": {
+    "devStart": "nodemon server.ts"
+  },
+  "keywords": [
+    "code",
+    "editor",
+    "web"
+  ],
+  "author": "Andrej",
+  "license": "GPL-3.0-only",
+  "devDependencies": {
+    "typescript": "^5.5.3"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
