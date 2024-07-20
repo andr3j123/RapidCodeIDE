@@ -137,3 +137,49 @@ svg{
     cursor: pointer;
     background-color: #36374a;
 }
+
+/* Log in page */
+
+.logInContainer, .registerContainer{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #36374a;
+    width: 30vw;
+    height: 50vh;
+    border-radius: 5px;
+}
+.registerContainer{
+    display: none;
+}
+.logInForm, .registerForm{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 15px;
+    height: 75%;
+}
+.loginFormInput, .registerFormInput{
+    margin: 10px 0 10px 0;
+    padding: 5px;
+}
+.registerFormInput{
+    margin: 5px 0 5px 0;
+}
+.loginFormInput:focus, .registerFormInput:focus{
+    outline: none;
+}
+.logInBtn, .registerBtn{
+    margin: 15px 0 0 0;
+    padding: 5px;
+    cursor: pointer;
+}
+.changeForm{
+    cursor: pointer;
+    user-select: none;
+}
