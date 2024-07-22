@@ -3,6 +3,8 @@ const express = require('express');
 const { MongoClient } = require('mongodb');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
+const fs = require('fs/promises');
+const path = require('path');
 
 const router = express.Router();
 router.use(bodyParser.urlencoded({ extended: true }));
@@ -12,26 +14,43 @@ const client = new MongoClient(mongoURL);
 const dbName = process.env.MONGODB_NAME;
 
 router.post('/', async (req, res) => {
-    try{
+    try {
         await client.connect();
         const db = client.db(dbName);
-        const collection = db.collection('users');  
+        const collection = db.collection('users');
 
         const { usernameRegister, emailRegister, passwordRegister } = req.body;
-
+        
         if (!usernameRegister || !emailRegister || !passwordRegister) {
-            return res.sendStatus(400).redirect('../login.html');
+            return res.status(400).json({ "message": "All fields are required" });
+        }
+
+        const existingUser = await collection.findOne({ email: emailRegister });
+        if (existingUser) {
+            return res.status(400).json({ "message": "User already exists" });
         }
 
         const hashedPassword = await bcrypt.hash(passwordRegister, 10);
 
-        await collection.insertOne({ "username": usernameRegister, "email": emailRegister, "password": hashedPassword, "files": {} });
+        const result = await collection.insertOne({ "username": usernameRegister, "email": emailRegister, "password": hashedPassword, "files": {} });
 
-        res.status(200).redirect('../login.html');
-    }
-    catch(err){
+        if (result.acknowledged) {
+            const userDirectory = path.join(__dirname, '../../users', emailRegister);
+
+            try {
+                await fs.mkdir(userDirectory, { recursive: true });
+                return res.status(200).json({ "message": "User registered successfully" });
+            } catch (err) {
+                console.error('Failed to create user directory:', err);
+                return res.status(500).json({ "message": "Failed to create user directory" });
+            }
+        } else {
+            return res.status(500).json({ "message": "Failed to register user" });
+        }
+
+    } catch (err) {
         console.error(err);
-        res.sendStatus(500);
+        return res.status(500).json({ "message": "Internal server error" });
     }
 });
 
