@@ -54,10 +54,4 @@ document.addEventListener('DOMContentLoaded', () => {
                     alert('Unable to paste text!')
                 });
         });
-
-        // Find button
-
-        document.getElementById('find').addEventListener('click', () => {
-            editor.focus()
-        });
 });
