@@ -1,0 +1,46 @@
+const express = require('express');
+const router = express.Router();
+const { MongoClient } = require('mongodb');
+const fs = require('fs');
+const path = require('path');
+const { ObjectId } = require('bson');
+
+const mongoURL = process.env.MONGODB_URL;
+const client = new MongoClient(mongoURL);
+const dbName = process.env.MONGODB_NAME;
+
+router.get('/', async (req, res) => {
+    try{
+        await client.connect();
+        const db = client.db(dbName);
+
+        if (!req.session.userId) {
+            return res.status(401).json({ "message": "Unauthorized" });
+        }
+
+        const userId = req.session.userId;
+        const objectId = new ObjectId(userId);
+
+        const user = await db.collection('users').findOne({ _id: objectId });
+
+        const userDirectory = path.join(__dirname, '../../users', user.email);
+
+        fs.readdir(userDirectory, (err, files) => {
+            if (err) return res.status(500).send({ "message": err });
+
+            let userFiles = [];
+
+            files.forEach(file => userFiles.push(file));
+
+            return res.send({"userFiles": userFiles});
+        });
+
+    }
+    catch(err){
+        return res.status(500).json({ "message": "Internal server error" });
+    }
+
+
+});
+
+module.exports = router;

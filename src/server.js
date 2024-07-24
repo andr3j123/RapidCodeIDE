@@ -35,12 +35,14 @@ app.get('/api/sessionData', (req, res) => {
   res.send({ userId: req.session.userId, username: req.session.username });
 });
 
-app.get('*', (req, res) => {
-  res.status(404).send('<h1>404 not found</h1>');
-});
-
 const loginRoute = require('./routes/login');
 const registerRoute = require('./routes/register');
+const readFilesRoute = require('./routes/readFiles');
 
 app.use('/login', loginRoute);
 app.use('/register', registerRoute);
+app.use('/api/readFiles', readFilesRoute);
+
+app.get('*', (req, res) => {
+  res.status(404).send('<h1>404 not found</h1>');
+});
