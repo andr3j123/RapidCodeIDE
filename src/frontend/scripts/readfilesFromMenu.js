@@ -12,14 +12,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         try{
             const files = await fetchFiles();
 
-            console.log(files)
-
             files.forEach(file => {
-                const node = document.createElement('div');
-                node.className = 'fileName';
+                const fileName = document.createElement('a');
+                fileName.className = 'fileName';
+                fileName.id = file;
+                fileName.href = `javascript:displayContent('${file}')`;
                 const textnode = document.createTextNode(file);
-                node.appendChild(textnode);
-                document.getElementById('fileExplorer').appendChild(node);
+                fileName.appendChild(textnode);
+                document.getElementById('fileExplorer').appendChild(fileName);
               });
         }
         catch(err){

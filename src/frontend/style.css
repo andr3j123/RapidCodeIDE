@@ -1,4 +1,3 @@
-
 body{
     height: 100vh;
     width: 100vw;
@@ -31,6 +30,11 @@ svg{
 }
 .toolboxItemsContainer{
     display: flex;
+    height: 100%;
+}
+.fileNameToolbox{
+    height: 100%;
+    font-size: 1em;
     height: 100%;
 }
 .logIn{
@@ -71,6 +75,8 @@ svg{
     cursor: pointer;
     font-size: 1em;
     height: 5px;
+    color: white;
+    text-decoration: none;
 }
 .textEditor{
     display: flex;

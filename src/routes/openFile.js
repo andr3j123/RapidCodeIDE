@@ -9,8 +9,11 @@ const mongoURL = process.env.MONGODB_URL;
 const client = new MongoClient(mongoURL);
 const dbName = process.env.MONGODB_NAME;
 
-router.get('/', async (req, res) => {
+router.get('/:fileName', async (req, res) => {
     try{
+        const params = req.params;
+        const fileName = params.fileName;
+
         await client.connect();
         const db = client.db(dbName);
 
@@ -23,23 +26,20 @@ router.get('/', async (req, res) => {
 
         const user = await db.collection('users').findOne({ _id: objectId }, { projection: { _id: 0, username: 0, password: 0, files: 0} });
 
-        const userDirectory = path.join(__dirname, '../../users', user.email);
+        const filePath = path.join(__dirname, `../../users/${user.email}/${fileName}`);
 
-        fs.readdir(userDirectory, (err, files) => {
-            if (err) return res.status(500).send({ "message": err });
+        try{
+            const contentOfTheFile = fs.readFileSync(filePath, { encoding: 'utf8', flag: 'r' });
 
-            let userFiles = [];
-
-            files.forEach(file => userFiles.push(file));
-
-            return res.send({"userFiles": userFiles});
-        });
-
+            return res.status(200).send({ title: fileName, content: contentOfTheFile });
+        }
+        catch(err){
+            res.sendStatus(404);
+        }
     }
     catch(err){
         return res.status(500).json({ "message": "Internal server error" });
     }
-
 
 });
 
