@@ -1,50 +1,53 @@
-require('dotenv').config();
-const express = require('express');
-const path = require('path');
-const session = require('express-session');
-const MongoStore = require('connect-mongo');
+require("dotenv").config();
+const express = require("express");
+const path = require("path");
+const session = require("express-session");
+const MongoStore = require("connect-mongo");
 const app = express();
 
 const PORT = process.env.SERVER_PORT || 8080;
 
 app.listen(PORT);
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'frontend')));
+app.use(express.static(path.join(__dirname, "frontend")));
 
 // Configure session middleware
 const sessionStore = MongoStore.create({
   mongoUrl: process.env.MONGODB_URL,
   dbName: process.env.MONGODB_NAME,
-  collectionName: 'sessions',
-  autoRemoveInterval: 1440 // 1 day in mins
+  collectionName: "sessions",
+  autoRemoveInterval: 1440, // 1 day in mins
 });
 
-app.use(session({
+app.use(
+  session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     store: sessionStore,
     cookie: {
-        maxAge: 1000 * 60 * 60 * 24, // 1 day
-    }
-}));
+      maxAge: 1000 * 60 * 60 * 24, // 1 day
+    },
+  })
+);
 
-
-app.get('/api/sessionData', (req, res) => {
+app.get("/api/sessionData", (req, res) => {
   if (!req.session.userId) return res.send({});
   res.send({ userId: req.session.userId, username: req.session.username });
 });
 
-const loginRoute = require('./routes/login');
-const registerRoute = require('./routes/register');
-const readFilesRoute = require('./routes/readFiles');
-const openFilesRoute = require('./routes/openFile');
+const loginRoute = require("./routes/login");
+const registerRoute = require("./routes/register");
+const readFilesRoute = require("./routes/readFiles");
+const openFilesRoute = require("./routes/openFile");
+const createFileRoute = require("./routes/createFile");
 
-app.use('/login', loginRoute);
-app.use('/register', registerRoute);
-app.use('/api/readFiles', readFilesRoute);
-app.use('/api/openFile', openFilesRoute);
+app.use("/login", loginRoute);
+app.use("/register", registerRoute);
+app.use("/api/readFiles", readFilesRoute);
+app.use("/api/openFile", openFilesRoute);
+app.use("/api/createFile", createFileRoute);
 
-app.get('*', (req, res) => {
-  res.status(404).send('<h1>404 not found</h1>');
+app.get("*", (req, res) => {
+  res.status(404).send("<h1>404 not found</h1>");
 });
