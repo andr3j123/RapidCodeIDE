@@ -41,12 +41,14 @@ const registerRoute = require("./routes/register");
 const readFilesRoute = require("./routes/readFiles");
 const openFilesRoute = require("./routes/openFile");
 const createFileRoute = require("./routes/createFile");
+const logOutRoute = require("./routes/logout");
 
 app.use("/login", loginRoute);
 app.use("/register", registerRoute);
 app.use("/api/readFiles", readFilesRoute);
 app.use("/api/openFile", openFilesRoute);
 app.use("/api/createFile", createFileRoute);
+app.use("/logout", logOutRoute);
 
 app.get("*", (req, res) => {
   res.status(404).send("<h1>404 not found</h1>");
