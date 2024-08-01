@@ -42,12 +42,14 @@ const readFilesRoute = require("./routes/readFiles");
 const openFilesRoute = require("./routes/openFile");
 const createFileRoute = require("./routes/createFile");
 const logOutRoute = require("./routes/logout");
+const saveFileRoute = require("./routes/saveFile");
 
 app.use("/login", loginRoute);
 app.use("/register", registerRoute);
 app.use("/api/readFiles", readFilesRoute);
 app.use("/api/openFile", openFilesRoute);
 app.use("/api/createFile", createFileRoute);
+app.use("/api/saveFile", saveFileRoute);
 app.use("/logout", logOutRoute);
 
 app.get("*", (req, res) => {

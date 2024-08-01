@@ -31,6 +31,20 @@
       <p id="newTextFile" class="menuItem">New text file</p>
       <p id="openFile" class="menuItem">Open</p>
       <input type="file" id="openFileInput" style="display: none" />
+      <form action="/api/saveFile" method="post" id="saveFile">
+        <input
+          type="text"
+          name="titleToSave"
+          id="hiddenTitle"
+          style="display: none"
+        />
+        <textarea
+          name="textToSave"
+          id="textToSave"
+          style="display: none"
+        ></textarea>
+        <p id="save" class="menuItem">Save</p>
+      </form>
       <p id="saveAs" class="menuItem">Export</p>
       <p id="editorSettings" class="menuItem">Editor Settings</p>
     </div>
