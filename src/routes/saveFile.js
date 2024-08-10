@@ -34,7 +34,7 @@ router.post("/", async (req, res) => {
       .collection("users")
       .findOne(
         { _id: objectId },
-        { projection: { _id: 0, username: 0, password: 0, files: 0 } }
+        { projection: { _id: 0, username: 0, password: 0 } }
       );
 
     const filePath = path.join(
@@ -42,7 +42,25 @@ router.post("/", async (req, res) => {
       `../../users/${user.email}/${titleToSave}`
     );
 
+    const dirPath = path.join(__dirname, `../../users/${user.email}`);
+
+    if (user.remainingStorageInBytes <= 0) {
+      return res.status(405).send({ message: "Max space reached" });
+    }
+
     fs.writeFileSync(filePath, textToSave, "utf8");
+
+    const getFolderSize = (await import("get-folder-size")).default;
+
+    const currentFolderSize = await getFolderSize.loose(dirPath);
+
+    const newRemainingStorage =
+      process.env.MAX_ALLOWED_SPACE_FOR_USER - currentFolderSize;
+
+    db.collection("users").findOneAndUpdate(
+      { email: user.email },
+      { $set: { remainingStorageInBytes: newRemainingStorage } }
+    );
 
     res.sendStatus(200);
   } catch {

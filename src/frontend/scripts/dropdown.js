@@ -1,66 +1,64 @@
-document.addEventListener('DOMContentLoaded', () => {
-    
-    // File menu
+document.addEventListener("DOMContentLoaded", () => {
+  // File menu
 
-    const toolboxFile = document.getElementById('toolboxFile');
-    const fileMenu = document.getElementById('fileMenu');
+  const toolboxFile = document.getElementById("toolboxFile");
+  const fileMenu = document.getElementById("fileMenu");
 
-    toolboxFile.addEventListener('mouseenter', () => {
-        fileMenu.style.display = 'block';
-    });
+  toolboxFile.addEventListener("mouseenter", () => {
+    fileMenu.style.display = "block";
+  });
 
-    toolboxFile.addEventListener('mouseleave', () => {
-        fileMenu.style.display = 'none';
-    });
+  toolboxFile.addEventListener("mouseleave", () => {
+    fileMenu.style.display = "none";
+  });
 
-    fileMenu.addEventListener('mouseover', () => {
-        fileMenu.style.display = 'block';
-    });
+  fileMenu.addEventListener("mouseover", () => {
+    fileMenu.style.display = "block";
+  });
 
-    fileMenu.addEventListener('mouseleave', () => {
-        fileMenu.style.display = 'none';
-    });
+  fileMenu.addEventListener("mouseleave", () => {
+    fileMenu.style.display = "none";
+  });
 
-    // Edit menu
+  // Edit menu
 
-    const toolboxEdit = document.getElementById('toolboxEdit');
-    const editMenu = document.getElementById('editMenu');
+  const toolboxEdit = document.getElementById("toolboxEdit");
+  const editMenu = document.getElementById("editMenu");
 
-    toolboxEdit.addEventListener('mouseenter', () => {
-        editMenu.style.display = 'block';
-    });
-    
-    toolboxEdit.addEventListener('mouseleave', () => {
-        editMenu.style.display = 'none';
-    });
+  toolboxEdit.addEventListener("mouseenter", () => {
+    editMenu.style.display = "block";
+  });
 
-    editMenu.addEventListener('mouseover', () => {
-        editMenu.style.display = 'block';
-    });
+  toolboxEdit.addEventListener("mouseleave", () => {
+    editMenu.style.display = "none";
+  });
 
-    editMenu.addEventListener('mouseleave', () => {
-        editMenu.style.display = 'none';
-    });
+  editMenu.addEventListener("mouseover", () => {
+    editMenu.style.display = "block";
+  });
 
-    // Help menu
+  editMenu.addEventListener("mouseleave", () => {
+    editMenu.style.display = "none";
+  });
 
-    const toolboxHelp = document.getElementById('toolboxHelp');
-    const helpMenu = document.getElementById('helpMenu');
+  // Help menu
 
-    toolboxHelp.addEventListener('mouseenter', () => {
-        helpMenu.style.display = 'block';
-    });
-    
-    toolboxHelp.addEventListener('mouseleave', () => {
-        helpMenu.style.display = 'none';
-    });
+  const toolboxHelp = document.getElementById("toolboxHelp");
+  const helpMenu = document.getElementById("helpMenu");
 
-    helpMenu.addEventListener('mouseover', () => {
-        helpMenu.style.display = 'block';
-    });
+  toolboxHelp.addEventListener("mouseenter", () => {
+    helpMenu.style.display = "block";
+  });
 
-    helpMenu.addEventListener('mouseleave', () => {
-        helpMenu.style.display = 'none';
-    });
+  toolboxHelp.addEventListener("mouseleave", () => {
+    helpMenu.style.display = "none";
+  });
 
+  helpMenu.addEventListener("mouseover", () => {
+    helpMenu.style.display = "block";
+  });
+
+  helpMenu.addEventListener("mouseleave", () => {
+    helpMenu.style.display = "none";
+  });
 });

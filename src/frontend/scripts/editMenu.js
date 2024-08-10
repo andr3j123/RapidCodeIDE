@@ -1,57 +1,58 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
+  // Undo button
 
-    // Undo button
+  const editor = document.getElementById("editor");
 
-    const editor = document.getElementById('editor');
+  let history = [];
+  let currentIndex = -1;
 
-    let history = [];
-    let currentIndex = -1;
+  editor.addEventListener("input", () => {
+    // Remove future states if any
+    history = history.slice(0, currentIndex + 1);
+    // Add new state
+    history.push(editor.value);
+    currentIndex++;
 
-    editor.addEventListener('input', () => {
-        // Remove future states if any
-        history = history.slice(0, currentIndex + 1);
-        // Add new state
-        history.push(editor.value);
-        currentIndex++;
+    if (currentIndex > 500) {
+      history = [];
+      currentIndex = -1;
+    }
+  });
 
-        if (currentIndex > 500){
-            history = [];
-            currentIndex = -1;
-        }
-    });
+  document.getElementById("undo").addEventListener("click", () => {
+    if (currentIndex > 0) {
+      currentIndex--;
+      editor.value = history[currentIndex];
+    }
+  });
 
+  // Copy button
 
-        document.getElementById('undo').addEventListener('click', () => {
-            if (currentIndex > 0) {
-                currentIndex--;
-                editor.value = history[currentIndex];
-            }
-        });
+  document.getElementById("copy").addEventListener("click", () => {
+    navigator.clipboard
+      .writeText(editor.value)
+      .catch((err) => alert("Unable to copy text!"));
+  });
 
-        // Copy button
+  // Cut button
 
-        document.getElementById('copy').addEventListener('click', () => {
-            navigator.clipboard.writeText(editor.value)
-                .catch(err => alert('Unable to copy text!'));
-        });
+  document.getElementById("cut").addEventListener("click", () => {
+    navigator.clipboard
+      .writeText(editor.value)
+      .catch((err) => alert("Unable to cut text!"));
+    editor.value = "";
+  });
 
-        // Cut button
+  // Paste button
 
-        document.getElementById('cut').addEventListener('click', () => {
-            navigator.clipboard.writeText(editor.value)
-                .catch(err => alert('Unable to cut text!'));
-            editor.value = '';
-        });
-
-        // Paste button 
-
-        document.getElementById('paste').addEventListener('click', () => {
-            navigator.clipboard.readText()
-                .then(text => {
-                    editor.value = text;
-                })
-                .catch(err => {
-                    alert('Unable to paste text!')
-                });
-        });
+  document.getElementById("paste").addEventListener("click", () => {
+    navigator.clipboard
+      .readText()
+      .then((text) => {
+        editor.value = text;
+      })
+      .catch((err) => {
+        alert("Unable to paste text!");
+      });
+  });
 });
