@@ -1,15 +1,15 @@
 {
   "name": "rapidcodeide",
-  "version": "0.1.0-alpha",
+  "version": "0.1.0-beta",
   "description": "In-browser code editor to simplify your code editing experience",
   "main": "./src/server.js",
   "scripts": {
-    "devStart": "nodemon ./src/server.js"
+    "devStart": "nodemon ./src/server.js",
+    "start": "node ./src/server.js"
   },
   "keywords": [
-    "code",
-    "editor",
-    "web"
+    "code-editor",
+    "online"
   ],
   "author": "Andrej",
   "license": "GPL-3.0-only",
