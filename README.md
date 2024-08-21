@@ -51,8 +51,8 @@ Create a `.env` file in the root directory of the project and add the required e
 ```.env
   MONGODB_URL=mongodb://localhost:27017/				# Or your custom MongoDB url
   MONGODB_NAME=RapidCodeIDE
-  SESSION_SECRET=								# Create your own secret session key
-  SERVER_PORT=3030 								# Change your port if you want
+  SESSION_SECRET=						# Create your own secret session key
+  SERVER_PORT=3030 					# Change your port if you want
   MAX_ALLOWED_SPACE_FOR_USER=25000000					# 25MB in bytes
 ```
 
