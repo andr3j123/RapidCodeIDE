@@ -53,10 +53,6 @@ document.addEventListener("DOMContentLoaded", () => {
     saveAs();
   });
 
-  document.getElementById("editorSettings").addEventListener("click", () => {
-    document.getElementById("settings").style.display = "flex";
-  });
-
   document.getElementById("save").addEventListener("click", () => {
     const content = document.getElementById("editor").value;
 

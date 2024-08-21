@@ -44,9 +44,7 @@ router.post("/", async (req, res) => {
 
       try {
         await fs.mkdir(userDirectory, { recursive: true });
-        return res
-          .status(200)
-          .json({ message: "User registered successfully" });
+        return res.status(200).redirect("back");
       } catch (err) {
         console.error("Failed to create user directory:", err);
         return res

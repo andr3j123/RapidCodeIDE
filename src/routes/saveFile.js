@@ -62,7 +62,7 @@ router.post("/", async (req, res) => {
       { $set: { remainingStorageInBytes: newRemainingStorage } }
     );
 
-    res.sendStatus(200);
+    return res.status(200).redirect("back");
   } catch {
     return res.status(500).json({ message: "Internal server error" });
   }

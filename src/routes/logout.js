@@ -10,7 +10,7 @@ router.get("/", (req, res) => {
     if (err) return res.sendStatus(500);
   });
 
-  return res.sendStatus(200);
+  return res.status(200).redirect("back");
 });
 
 module.exports = router;
