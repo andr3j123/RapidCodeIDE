@@ -28,7 +28,7 @@ router.get("/", async (req, res) => {
         { projection: { _id: 0, username: 0, password: 0, files: 0 } }
       );
 
-    const userDirectory = path.join(__dirname, "../../users", user.email);
+    const userDirectory = path.join(__dirname, `../../../users/${user.email}`);
 
     fs.readdir(userDirectory, (err, files) => {
       if (err) return res.status(500).send({ message: err });

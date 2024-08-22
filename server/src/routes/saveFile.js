@@ -39,10 +39,10 @@ router.post("/", async (req, res) => {
 
     const filePath = path.join(
       __dirname,
-      `../../users/${user.email}/${titleToSave}`
+      `../../../users/${user.email}/${titleToSave}`
     );
 
-    const dirPath = path.join(__dirname, `../../users/${user.email}`);
+    const dirPath = path.join(__dirname, `../../../users/${user.email}`);
 
     if (user.remainingStorageInBytes <= 0) {
       return res.status(405).send({ message: "Max space reached" });

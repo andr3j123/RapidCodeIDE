@@ -2,7 +2,7 @@
   "name": "rapidcodeide",
   "version": "0.1.0-beta",
   "description": "In-browser code editor to simplify your code editing experience",
-  "main": "./src/server.js",
+  "main": "./server.js",
   "scripts": {
     "devStart": "nodemon ./src/server.js",
     "start": "node ./src/server.js"

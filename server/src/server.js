@@ -9,7 +9,6 @@ const PORT = process.env.SERVER_PORT || 8080;
 
 app.listen(PORT);
 app.use(express.json());
-app.use(express.static(path.join(__dirname, "frontend")));
 
 // Configure session middleware
 const sessionStore = MongoStore.create({
