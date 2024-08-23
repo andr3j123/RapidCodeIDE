@@ -5,7 +5,7 @@ function RegistrationPage() {
     <form
       action=""
       method="post"
-      className="flex flex-col justify-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-light-gray p-4 w-5/6 h-2/3 md:w-3/6 lg:w-2/6 xl:w-1/4"
+      className="flex flex-col justify-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-light-gray p-4 w-5/6 h-5/6 md:w-3/6 md:h-2/3 lg:w-2/6 xl:w-1/4"
     >
       <label htmlFor="usernameRegister" className="p-5 pl-0 pb-1 text-lg">
         Username:
