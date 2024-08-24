@@ -15,7 +15,7 @@ function LoginPage() {
         name="emailLogin"
         id="emailLogin"
         required
-        className="bg-input-bg shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        className="bg-input-bg text-black shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
       />
 
       <label htmlFor="passwordLogin" className="p-5 pl-0 pb-1 text-lg">
@@ -26,7 +26,7 @@ function LoginPage() {
         name="passwordLogin"
         id="passwordLogin"
         required
-        className="bg-input-bg shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        className="bg-input-bg text-black shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
       />
 
       <input

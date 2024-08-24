@@ -15,7 +15,7 @@ function RegistrationPage() {
         name="usernameRegister"
         id="usernameRegister"
         required
-        className="bg-input-bg shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        className="bg-input-bg text-black shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
       />
 
       <label htmlFor="emailRegister" className="p-5 pl-0 pb-1 text-lg">
@@ -26,7 +26,7 @@ function RegistrationPage() {
         name="emailRegister"
         id="emailRegister"
         required
-        className="bg-input-bg shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        className="bg-input-bg text-black shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
       />
 
       <label htmlFor="passwordRegister" className="p-5 pl-0 pb-1 text-lg">
@@ -37,7 +37,7 @@ function RegistrationPage() {
         name="passwordRegister"
         id="passwordRegister"
         required
-        className="bg-input-bg shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        className="bg-input-bg text-black shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
       />
 
       <label htmlFor="passwordConfirm" className="p-5 pl-0 pb-1 text-lg">
@@ -48,7 +48,7 @@ function RegistrationPage() {
         name="passwordConfirm"
         id="passwordConfirm"
         required
-        className="bg-input-bg shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        className="bg-input-bg text-black shadow appearance-none border rounded w-full py-2 px-3  leading-tight focus:outline-none focus:shadow-outline"
       />
 
       <input
