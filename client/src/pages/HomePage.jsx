@@ -4,12 +4,13 @@ import FileExplorer from "../components/FileExplorer";
 import { useState } from "react";
 import rightArrow from "../assets/open-file-explorer-icon.svg";
 import { isMobile } from "react-device-detect";
+import { EditorProvider } from "../context/editorContext";
 
 function HomePage() {
   const [isFileExplorerShown, setIsFileExplorerShown] = useState(false);
 
   return (
-    <>
+    <EditorProvider>
       <ToolBox />
 
       <main className="flex flex-row">
@@ -40,7 +41,7 @@ function HomePage() {
           onClick={() => setIsFileExplorerShown(!isFileExplorerShown)}
         />
       </div>
-    </>
+    </EditorProvider>
   );
 }
 
