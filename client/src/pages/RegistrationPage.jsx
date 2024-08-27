@@ -1,11 +1,23 @@
+import { useRef } from "react";
 import { Link } from "react-router-dom";
 
 function RegistrationPage() {
+  const passwordField = useRef();
+  const confirmPasswordField = useRef();
+
+  const confirmPassword = (event) => {
+    event.preventDefault();
+    if (passwordField.current.value !== confirmPasswordField.current.value) {
+      confirmPasswordField.current.setCustomValidity("Passwords don't match");
+    } else {
+      confirmPasswordField.current.setCustomValidity("");
+    }
+  };
+
   return (
     <form
-      action=""
-      method="post"
       className="flex flex-col justify-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-light-gray p-4 w-5/6 h-5/6 md:w-3/6 md:h-2/3 lg:w-2/6 xl:w-1/4"
+      onSubmit={confirmPassword}
     >
       <label htmlFor="usernameRegister" className="p-5 pl-0 pb-1 text-lg">
         Username:
@@ -33,6 +45,7 @@ function RegistrationPage() {
         Password:
       </label>
       <input
+        ref={passwordField}
         type="password"
         name="passwordRegister"
         id="passwordRegister"
@@ -44,6 +57,7 @@ function RegistrationPage() {
         Confirm Password:
       </label>
       <input
+        ref={confirmPasswordField}
         type="password"
         name="passwordConfirm"
         id="passwordConfirm"
