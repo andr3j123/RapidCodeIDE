@@ -3,7 +3,6 @@ import { useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 function RegistrationPage() {
-  const passwordField = useRef();
   const confirmPasswordField = useRef();
   const navigate = useNavigate();
 
@@ -28,8 +27,11 @@ function RegistrationPage() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    if (passwordField.current.value !== confirmPasswordField.current.value) {
+    if (
+      event.target.passwordRegister.value !== event.target.passwordConfirm.value
+    ) {
       confirmPasswordField.current.setCustomValidity("Passwords don't match");
+      confirmPasswordField.reportValidity();
       return;
     } else {
       confirmPasswordField.current.setCustomValidity("");
@@ -79,7 +81,6 @@ function RegistrationPage() {
         Password:
       </label>
       <input
-        ref={passwordField}
         type="password"
         name="passwordRegister"
         id="passwordRegister"
@@ -97,6 +98,11 @@ function RegistrationPage() {
         id="passwordConfirm"
         required
         className="bg-input-bg text-black shadow appearance-none border rounded w-full py-2 px-3  leading-tight focus:outline-none focus:shadow-outline"
+        onChange={() => {
+          if (confirmPasswordField.current) {
+            confirmPasswordField.current.setCustomValidity("");
+          }
+        }}
       />
 
       <input
