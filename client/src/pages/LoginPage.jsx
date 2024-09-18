@@ -10,6 +10,7 @@ function LoginPage() {
         method: "POST",
         body: JSON.stringify(data),
         headers: { "Content-type": "application/json" },
+        credentials: "include",
       });
       if (!response.ok) {
         const errorData = await response.json();

@@ -14,11 +14,21 @@ router.get("/", async (req, res) => {
     await client.connect();
     const db = client.db(dbName);
 
-    if (!req.session.userId) {
+    if (!req.cookies.sessionId) {
       return res.status(401).json({ message: "Unauthorized" });
     }
 
-    const userId = req.session.userId;
+    const session = await db
+      .collection("sessions")
+      .findOne({ _id: req.cookies.sessionId });
+
+    if (!session || !session.session) {
+      return res.status(401).json({ message: "Invalid session" });
+    }
+
+    let sessionData = JSON.parse(session.session);
+
+    const userId = sessionData.userId;
     const objectId = new ObjectId(userId);
 
     const user = await db
@@ -28,7 +38,7 @@ router.get("/", async (req, res) => {
         { projection: { _id: 0, username: 0, password: 0, files: 0 } }
       );
 
-    const userDirectory = path.join(__dirname, `../../../users/${user.email}`);
+    const userDirectory = path.join(__dirname, `./../../users/${user.email}`);
 
     fs.readdir(userDirectory, (err, files) => {
       if (err) return res.status(500).send({ message: err });

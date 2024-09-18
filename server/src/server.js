@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
+const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const app = express();
 
@@ -16,6 +17,7 @@ app.use(
     origin: process.env.CLIENT_URL,
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type"],
+    credentials: true,
   })
 );
 
@@ -36,9 +38,14 @@ app.use(
     store: sessionStore,
     cookie: {
       maxAge: 1000 * 60 * 60 * 24, // 1 day
+      secure: process.env.NODE_ENV === "production",
+      httpOnly: true,
+      sameSite: "none",
     },
   })
 );
+
+app.use(cookieParser());
 
 app.get("/sessionData", (req, res) => {
   if (!req.session.userId) return res.send({});
