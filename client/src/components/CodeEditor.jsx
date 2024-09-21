@@ -1,6 +1,6 @@
 import Editor from "@monaco-editor/react";
 import { useContext } from "react";
-import { EditorContext } from "../context/editorContext";
+import { EditorContext } from "../context/EditorContext";
 
 function CodeEditor() {
   const { editorContent, setEditorContent } = useContext(EditorContext);

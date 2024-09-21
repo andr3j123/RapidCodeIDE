@@ -17,11 +17,21 @@ router.get("/:fileName", async (req, res) => {
     await client.connect();
     const db = client.db(dbName);
 
-    if (!req.session.userId) {
+    if (!req.cookies.sessionId) {
       return res.status(401).json({ message: "Unauthorized" });
     }
 
-    const userId = req.session.userId;
+    const session = await db
+      .collection("sessions")
+      .findOne({ _id: req.cookies.sessionId });
+
+    if (!session || !session.session) {
+      return res.status(401).json({ message: "Invalid session" });
+    }
+
+    let sessionData = JSON.parse(session.session);
+
+    const userId = sessionData.userId;
     const objectId = new ObjectId(userId);
 
     const user = await db
@@ -33,7 +43,7 @@ router.get("/:fileName", async (req, res) => {
 
     const filePath = path.join(
       __dirname,
-      `../../../users/${user.email}/${fileName}`
+      `./../../users/${user.email}/${fileName}`
     );
 
     try {
@@ -46,7 +56,7 @@ router.get("/:fileName", async (req, res) => {
         .status(200)
         .send({ title: fileName, content: contentOfTheFile });
     } catch (err) {
-      res.sendStatus(404);
+      res.status(404).send(err);
     }
   } catch (err) {
     return res.status(500).json({ message: "Internal server error" });

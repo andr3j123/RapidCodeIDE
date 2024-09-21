@@ -40,7 +40,6 @@ router.post("/", async (req, res) => {
     res.cookie("sessionId", req.sessionID, { httpOnly: true, secure: true });
     res.status(200).send({ message: "Login successful" });
   } catch (err) {
-    console.log(err);
     res.status(500).json({ message: "Internal server error" });
   }
 });
