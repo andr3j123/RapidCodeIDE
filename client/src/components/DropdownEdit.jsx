@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { EditorContext } from "../context/editorContext";
+import { EditorContext } from "../context/EditorContext";
 
 function DropDownEdit() {
   const { editorContent, setEditorContent } = useContext(EditorContext);

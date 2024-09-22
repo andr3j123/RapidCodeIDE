@@ -47,9 +47,9 @@ app.use(
 
 app.use(cookieParser());
 
-app.get("/sessionData", (req, res) => {
-  if (!req.session.userId) return res.send({});
-  res.send({ userId: req.session.userId, username: req.session.username });
+app.get("/check-auth", (req, res) => {
+  if (!req.cookies.sessionId) return res.send({ authenticated: false });
+  res.send({ authenticated: true });
 });
 
 const loginRoute = require("./routes/login");

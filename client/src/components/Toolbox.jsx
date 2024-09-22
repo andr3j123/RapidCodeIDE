@@ -3,8 +3,28 @@ import DropDownFile from "./DropdownFile";
 import DropDownEdit from "./DropdownEdit";
 import DropDownHelp from "./DropdownHelp";
 import { Link } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 
 function ToolBox() {
+  const { data, isLoading } = useQuery({
+    queryKey: ["check-auth"],
+    queryFn: async () => {
+      const response = await fetch(
+        `${import.meta.env.VITE_SERVER_URL}check-auth`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Could not check the auth");
+      }
+
+      return response.json();
+    },
+  });
+
   const [isFileActive, setIsFileActive] = useState(false);
   const [isEditActive, setIsEditActive] = useState(false);
   const [isHelpActive, setIsHelpActive] = useState(false);
@@ -41,9 +61,22 @@ function ToolBox() {
           {isHelpActive && <DropDownHelp />}
         </div>
       </nav>
-      <Link to="/login" className="text-xl p-3 cursor-pointer">
-        Log In
-      </Link>
+      {isLoading ? (
+        <p className="text-xl p-3">Loading...</p>
+      ) : data && !data.authenticated ? (
+        <Link to="/login" className="text-xl p-3 cursor-pointer">
+          Log In
+        </Link>
+      ) : (
+        <p
+          className="text-xl p-3 cursor-pointer"
+          onClick={() => {
+            /* include logout func */
+          }}
+        >
+          Log Out
+        </p>
+      )}
     </header>
   );
 }
