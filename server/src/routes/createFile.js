@@ -8,6 +8,7 @@ const path = require("path");
 const { ObjectId } = require("bson");
 
 router.use(bodyParser.urlencoded({ extended: true }));
+router.use(bodyParser.json());
 
 const mongoURL = process.env.MONGODB_URL;
 const client = new MongoClient(mongoURL);
@@ -18,13 +19,23 @@ router.post("/", async (req, res) => {
     await client.connect();
     const db = client.db(dbName);
 
-    if (!req.session.userId) {
-      return res.status(401).send({ message: "Unauthorized" });
+    if (!req.cookies.sessionId) {
+      return res.status(401).json({ message: "Unauthorized" });
     }
 
     const { fileName } = req.body;
 
-    const userId = req.session.userId;
+    const session = await db
+      .collection("sessions")
+      .findOne({ _id: req.cookies.sessionId });
+
+    if (!session || !session.session) {
+      return res.status(401).json({ message: "Invalid session" });
+    }
+
+    let sessionData = JSON.parse(session.session);
+
+    const userId = sessionData.userId;
     const objectId = new ObjectId(userId);
 
     const user = await db
@@ -36,21 +47,21 @@ router.post("/", async (req, res) => {
 
     const newFilePath = path.join(
       __dirname,
-      `../../../users/${user.email}/${fileName}`
+      `./../../users/${user.email}/${fileName}`
     );
 
     try {
       if (fs.existsSync(newFilePath)) {
         return res
           .status(405)
-          .send({ message: "File with that name already exists" });
+          .json({ message: "File with that name already exists" });
       }
       fs.open(newFilePath, "w", (err) => {
-        if (err) return res.status(500).send({ message: err });
+        if (err) return res.status(500).json({ message: err });
       });
-      return res.status(200).redirect("back");
+      return res.status(200).json({ message: "File created successfully" });
     } catch {
-      return res.status(500).send({ message: "Internal server error" });
+      return res.status(500).json({ message: "Internal server error" });
     }
   } catch {
     return res.status(500).json({ message: "Internal server error" });
