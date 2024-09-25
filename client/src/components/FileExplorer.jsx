@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { EditorContext } from "../context/EditorContext";
 
 function FileExplorer() {
-  const { setEditorContent } = useContext(EditorContext);
+  const { setEditorContent, setEditorName } = useContext(EditorContext);
 
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["files"],
@@ -59,7 +59,10 @@ function FileExplorer() {
                 key={file}
                 onClick={() =>
                   mutate(file, {
-                    onSuccess: (data) => setEditorContent(data.content),
+                    onSuccess: (data) => {
+                      setEditorContent(data.content);
+                      setEditorName(data.title);
+                    },
                   })
                 }
                 className="cursor-pointer"

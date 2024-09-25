@@ -7,6 +7,7 @@ const { ObjectId } = require("bson");
 const bodyParser = require("body-parser");
 
 router.use(bodyParser.urlencoded({ extended: true }));
+router.use(bodyParser.json());
 
 const mongoURL = process.env.MONGODB_URL;
 const client = new MongoClient(mongoURL);
@@ -17,17 +18,23 @@ router.post("/", async (req, res) => {
     await client.connect();
     const db = client.db(dbName);
 
-    if (!req.session.userId) {
+    const { titleToSave, textToSave } = req.body;
+
+    if (!req.cookies.sessionId) {
       return res.status(401).json({ message: "Unauthorized" });
     }
 
-    const { titleToSave, textToSave } = req.body;
+    const session = await db
+      .collection("sessions")
+      .findOne({ _id: req.cookies.sessionId });
 
-    if (!titleToSave) {
-      return res.status(404).send({ message: "File does not exist" });
+    if (!session || !session.session) {
+      return res.status(401).json({ message: "Invalid session" });
     }
 
-    const userId = req.session.userId;
+    let sessionData = JSON.parse(session.session);
+
+    const userId = sessionData.userId;
     const objectId = new ObjectId(userId);
 
     const user = await db
@@ -39,10 +46,10 @@ router.post("/", async (req, res) => {
 
     const filePath = path.join(
       __dirname,
-      `../../../users/${user.email}/${titleToSave}`
+      `./../../users/${user.email}/${titleToSave}`
     );
 
-    const dirPath = path.join(__dirname, `../../../users/${user.email}`);
+    const dirPath = path.join(__dirname, `./../../users/${user.email}`);
 
     if (user.remainingStorageInBytes <= 0) {
       return res.status(405).send({ message: "Max space reached" });
@@ -62,7 +69,7 @@ router.post("/", async (req, res) => {
       { $set: { remainingStorageInBytes: newRemainingStorage } }
     );
 
-    return res.status(200).redirect("back");
+    return res.sendStatus(200);
   } catch {
     return res.status(500).json({ message: "Internal server error" });
   }
