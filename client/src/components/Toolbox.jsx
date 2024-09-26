@@ -3,10 +3,10 @@ import DropDownFile from "./DropdownFile";
 import DropDownEdit from "./DropdownEdit";
 import DropDownHelp from "./DropdownHelp";
 import { Link } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 function ToolBox() {
-  const { data, isLoading } = useQuery({
+  const checkAuth = useQuery({
     queryKey: ["check-auth"],
     queryFn: async () => {
       const response = await fetch(
@@ -19,6 +19,22 @@ function ToolBox() {
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.message || "Could not check the auth");
+      }
+
+      return response.json();
+    },
+  });
+
+  const logOutMutation = useMutation({
+    mutationKey: ["logout"],
+    mutationFn: async () => {
+      const response = await fetch(`${import.meta.env.VITE_SERVER_URL}logout`, {
+        method: "GET",
+        credentials: "include",
+      });
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Could not logout");
       }
 
       return response.json();
@@ -61,9 +77,9 @@ function ToolBox() {
           {isHelpActive && <DropDownHelp />}
         </div>
       </nav>
-      {isLoading ? (
+      {checkAuth.isLoading ? (
         <p className="text-xl p-3">Loading...</p>
-      ) : data && !data.authenticated ? (
+      ) : checkAuth.data && !checkAuth.data.authenticated ? (
         <Link to="/login" className="text-xl p-3 cursor-pointer">
           Log In
         </Link>
@@ -71,7 +87,7 @@ function ToolBox() {
         <p
           className="text-xl p-3 cursor-pointer"
           onClick={() => {
-            /* include logout func */
+            logOutMutation.mutate();
           }}
         >
           Log Out
