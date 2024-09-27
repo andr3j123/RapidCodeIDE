@@ -88,6 +88,7 @@ function ToolBox() {
           className="text-xl p-3 cursor-pointer"
           onClick={() => {
             logOutMutation.mutate();
+            location.reload();
           }}
         >
           Log Out

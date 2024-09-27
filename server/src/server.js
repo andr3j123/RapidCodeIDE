@@ -59,6 +59,7 @@ const openFilesRoute = require("./routes/openFile");
 const createFileRoute = require("./routes/createFile");
 const logOutRoute = require("./routes/logout");
 const saveFileRoute = require("./routes/saveFile");
+const getUserDataRoute = require("./routes/getUserData");
 
 app.use("/login", loginRoute);
 app.use("/register", registerRoute);
@@ -67,7 +68,8 @@ app.use("/openFile", openFilesRoute);
 app.use("/createFile", createFileRoute);
 app.use("/saveFile", saveFileRoute);
 app.use("/logout", logOutRoute);
+app.use("/getUserData", getUserDataRoute);
 
 app.get("*", (_, res) => {
-  res.status(404).send("<h1>404 not found</h1>");
+  res.sendStatus(404);
 });

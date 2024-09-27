@@ -1,4 +1,4 @@
-import ToolBox from "../components/toolbox";
+import ToolBox from "../components/Toolbox";
 import CodeEditor from "../components/CodeEditor";
 import FileExplorer from "../components/FileExplorer";
 import { useState } from "react";
